@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './index.css';
+import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 export default function App() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,8 @@ export default function App() {
     setReport(null);
 
     try {
-      const res = await fetch('http://localhost:5000/api/audit', {
+      
+      const res = await fetch(`${BACKEND_URL}/api/audit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url }),
@@ -104,3 +107,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

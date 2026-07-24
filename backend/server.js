@@ -8,7 +8,7 @@ const PORT = 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors()); // Frontend se API request allow karne ke liye
+app.use(cors()); 
 
 // URL validation helper
 const isValidUrl = (string) => {
@@ -28,10 +28,21 @@ app.post('/api/audit', async (req, res) => {
     return res.status(400).json({ error: 'URL is required.' });
   }
 
-  // Agar user 'http://' bhool jaye toh add kar do
+  
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = `https://${url}`;
   }
+
+  const PORT = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+//For Vercel serverless functions
+module.exports = app;
 
   // 1. Invalid URL handling
   if (!isValidUrl(url)) {
@@ -47,7 +58,7 @@ app.post('/api/audit', async (req, res) => {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) URLAuditorBot/1.0',
       },
-      validateStatus: () => true, // Har HTTP status handle karega (404, 500 b)
+      validateStatus: () => true, 
     });
 
     const responseTime = Date.now() - startTime;
@@ -114,3 +125,5 @@ app.post('/api/audit', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
+
+module.exports = app;

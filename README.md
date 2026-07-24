@@ -13,7 +13,7 @@ A full-stack web tool built to audit web pages for performance, SEO structure, a
 ### 1. Installation
 ```bash
 # Clone repository
-git clone <YOUR_GITHUB_REPO_URL>
+git clone https://github.com/DebuggingAditya/url_auditor
 cd url-auditor
 
 # Install Backend Dependencies
